@@ -12,6 +12,10 @@ if [ -f "/var/log/ufw.log" ]; then
 else
   echo 'No existing firewall log file found. Skipping backup.'
 fi
+# Add a formatted entry as the first line of the new UFW log file
+timestamp=$(date +"%b %d %H:%M:%S")
+hostname=$(hostname)
+echo "$timestamp $hostname kernel: [UFW AUDIT] Firewall setup script started" | sudo tee /var/log/ufw.log > /dev/null
 # Enable UFW
 sudo ufw enable
 # Default policies
